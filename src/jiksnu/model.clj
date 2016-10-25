@@ -5,6 +5,12 @@
 (defonce bound-ns {:hm "http://host-meta.net/xrd/1.0"
                    :xrd "http://docs.oasis-open.org/ns/xri/xrd-1.0"})
 
+;; (s/def ::collection string?)
+;; (s/def ::type       string?)
+
+(def models
+  {"like" {::collection "likes" ::type "Like"}})
+
 (defrecord AccessToken             [])
 (defrecord Activity                [])
 (defrecord ActivityObject          [])
