@@ -7,7 +7,8 @@
             :url  "http://www.eclipse.org/legal/epl-v10.html"}
   :source-paths ["src" "src-cljs"]
   :resource-paths ["resources" "target/resources" "node_modules"]
-  :dependencies [[cider/cider-nrepl "0.14.0"]
+  :dependencies [[binaryage/devtools "0.8.3"]
+                 [cider/cider-nrepl "0.14.0"]
                  [ciste "0.6.0-20170108.005400-4"
                   :exclusions [ring/ring-core
                                org.clojure/clojure
@@ -90,12 +91,14 @@
                                  :main "jiksnu.main"
                                  :asset-path "cljs-none"
                                  :language-out :ecmascript5
+                                 :preloads [devtools.preload]
                                  :pretty-print true}}
                :main {:source-paths ["src-cljs"]
                       :notify-command ["notify-send"]
                       :compiler {:output-to "target/resources/public/cljs/jiksnu.js"
                                  :output-dir "target/resources/public/cljs"
                                  :source-map "target/resources/public/cljs/jiksnu.js.map"
+                                 :preloads [devtools.preload]
                                  ;; :main "jiksnu.app"
                                  :optimizations :simple
                                  :asset-path "cljs"
