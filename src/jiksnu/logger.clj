@@ -33,7 +33,7 @@
 (defn set-logger
   []
   (timbre/set-config!
-   {:level :debug
+   {:level :info
     :ns-whitelist []
     :ns-blacklist ["ciste.commands"
                    "ciste.config"
