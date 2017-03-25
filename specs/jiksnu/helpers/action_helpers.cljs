@@ -6,11 +6,15 @@
 (defn register-user
   ([] (register-user "test"))
   ([username]
+   (timbre/info "Registering user")
    (let [page (RegisterPage.)]
-     (.get page)
-     (.setUsername page username)
-     (.setPassword page "test")
-     (.submit page))))
+
+     ;; (.get page)
+     ;; (.setUsername page username)
+     ;; (.setPassword page "test")
+     ;; (.submit page)
+
+     )))
 
 (defn login-user
   []
