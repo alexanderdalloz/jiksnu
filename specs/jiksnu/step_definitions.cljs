@@ -36,12 +36,11 @@
 
    (Given #"^I am at the \"([^\"]*)\" page$" [page-name]
 
-     (timbre/infof "Page: %s" page-name)
-
-     (timbre/infof "Url: %s" (current-page) )
+     ;; (timbre/infof "Page: %s" page-name)
+     ;; (timbre/infof "Url: %s" (current-page))
 
      (let [page-object (aget pom/pages page-name)]
-       (timbre/infof "Page object: %s" page-object)
+       ;; (timbre/infof "Page object: %s" page-object)
        (sp/load-page (page-object.))))
 
    (Given #"^I am logged in as a normal user$" [next]
@@ -123,7 +122,8 @@
 
    (Then #"^I should be at the \"([^\"]*)\" page$" [page-name]
      (timbre/debugf "Asserting to be at page - %s" page-name)
-     (-> (.getCurrentUrl js/browser)
+     (js/browser.waitForAngular)
+     (-> (js/browser.getCurrentUrl)
          (.then (fn [url] (timbre/debugf "Current page: %s" url))))
      #_(.. (expect (get-current-page)) -to -eventually (equal page-name)))
 
