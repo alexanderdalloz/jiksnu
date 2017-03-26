@@ -9,30 +9,22 @@
   [pattern bind & body]
   (list 'this-as 'this
         (list '.Given 'this pattern
-              (concat
-               (apply list 'fn bind body)
-               (list nil)))))
+              (apply list 'fn bind body))))
 
 (defmacro When
   [pattern bind & body]
   (list 'this-as 'this
         (list '.When 'this pattern
-              (concat
-               (apply list 'fn bind body)
-               (list nil)))))
+              (apply list 'fn bind body))))
 
 (defmacro Then
   [pattern bind & body]
   (list 'this-as 'this
         (list '.Then 'this pattern
-              (concat
-               (apply list 'fn bind body)
-               (list nil)))))
+              (apply list 'fn bind body))))
 
 (defmacro And
   [pattern bind & body]
   (list 'this-as 'this
         (list '.And 'this pattern
-              (concat
-               (apply list 'fn bind body)
-               (list nil)))))
+              (apply list 'fn bind body))))
