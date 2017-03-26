@@ -65,11 +65,11 @@
      (-> (helpers.http/an-activity-exists)
          (.then (fn [] (next)))))
 
-   (Given #"^there is a user$" [next]
-     (.. (helpers.http/user-exists? "test")
-         (then (fn [a] true)
-               (fn [a] (helpers.action/register-user)))
-         (then next)))
+   (Given #"^there is a user$" []
+     (-> (helpers.http/user-exists? "test")
+         (.then (fn [a]
+                  (timbre/infof "user exists: %s" a)
+                  (when-not a (helpers.action/register-user))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

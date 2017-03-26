@@ -4,16 +4,19 @@
             [jiksnu.helpers.page-helpers :refer [base-domain base-path]]
             [taoensso.timbre :as timbre]))
 
+(timbre/infof "Base Path: %s" base-path)
+(def axios (nodejs/require "axios"))
 (def child-process (nodejs/require "child_process"))
 (def JSData (nodejs/require "js-data"))
 (def DSHttpAdapter (nodejs/require "js-data-http"))
-(def adapter (DSHttpAdapter.))
-(def store (JSData.DS))
+(def http-adapter (DSHttpAdapter. #js {:basePath base-path :http axios
+                                       :urlOverride true
+                                       :log nil
+                                       :error nil
+                                       :verbsUseBasePath true}))
+(def store (JSData.DS.))
 
-(.registerAdapter store "http" adapter #js {:default true})
-;; (def HttpAdapter (.-HttpAdapter (nodejs/require "js-data-http-node")))
-(timbre/infof "Base Path: %s" base-path)
-;; (def http-adapter (HttpAdapter. #js {:basePath base-path}))
+(.registerAdapter store "http" http-adapter #js {:default true})
 
 (defn get-cookie-map
   "Returns the cookie data from a response map"
@@ -76,13 +79,6 @@
 (defn user-exists?
   "Queries the server to see if a user exists with that name"
   [username]
-  (let [d (js/protractor.promise.defer)
-        url (str "/api/user/" username)]
-    #_
-    (.. http-adapter
-        (GET url)
-        (then (fn [response]
-                (if (= (.-statusCode response) 200)
-                  (.fulfill d true)
-                  (.reject d #js {:response response})))))
-    (.-promise d)))
+  (let [url (str "/model/users/acct:" username "@localhost")]
+    (-> (.GET http-adapter url)
+        (.then (constantly true) (constantly false)))))
