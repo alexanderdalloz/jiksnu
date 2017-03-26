@@ -1,6 +1,5 @@
 (ns jiksnu.pages.RegisterPage
-  (:require [clojure.browser.dom :as dom]
-            [jiksnu.helpers.page-helpers :refer [by-model]]
+  (:require [jiksnu.helpers.page-helpers :refer [by-model]]
             [taoensso.timbre :as timbre]))
 
 (defn RegisterPage
