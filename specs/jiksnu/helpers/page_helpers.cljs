@@ -24,10 +24,10 @@
   (.executeAsyncScript
    js/browser
    (fn [callback]
-     (-> (.fetchStatus js/app)
+     (-> (js/jiksnu.protocols.fetch-status js/app)
          (.then (fn [data]
-                  (js/console.log "data" data)
-                  (callback (.-data js/app))))))))
+                 (js/console.log "data" data)
+                 (callback (.-data js/app))))))))
 
 (defn get-username
   "Retrieve the logged in username from then app service"
@@ -35,6 +35,7 @@
   (js/console.log "get-username")
   (-> (get-app-data)
       (.then (fn [data]
+               (js/console.log "data" data)
                (let [username (.-user data)]
                  (js/console.log "Username: %s" username)
                  username)))))
