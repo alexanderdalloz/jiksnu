@@ -24,3 +24,9 @@
         (.then
          (fn []
            (timbre/info "login finished"))))))
+
+(defn log-out!
+  []
+  (do
+    (timbre/info "Deleting all cookies")
+    (.. js/browser manage deleteAllCookies)))

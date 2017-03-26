@@ -28,13 +28,10 @@
      (helpers.action/register-user "test2")
      (next))
 
-   (Given #"^I am (not )?logged in$" [not-str next]
-     (timbre/infof "Not str: %s" not-str)
+   (Given #"^I am (not )?logged in$" [not-str]
      (if (empty? not-str)
-       (.. (helpers.action/login-user) (then next))
-       (do
-         (timbre/info "Deleting all cookies")
-         (.. js/browser manage deleteAllCookies (then next)))))
+       (helpers.action/login-user)
+       (helpers.action/log-out!)))
 
    (Given #"^I am at the \"([^\"]*)\" page$" [page-name next]
 
