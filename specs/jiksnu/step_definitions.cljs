@@ -1,11 +1,12 @@
 (ns jiksnu.step-definitions
   (:require [jiksnu.helpers.action-helpers :as helpers.action]
             [jiksnu.helpers.http-helpers :as helpers.http]
-            [jiksnu.helpers.page-helpers :as page-helpers
+            [jiksnu.helpers.page-helpers :as helpers.page
              :refer [by-css by-model current-page element expect]]
             [jiksnu.pages.LoginPage :as lp :refer [LoginPage login]]
             [jiksnu.pages.RegisterPage :refer [RegisterPage]]
             [jiksnu.PageObjectMap :as pom]
+            [jiksnu.specs.protocols :as sp]
             [taoensso.timbre :as timbre])
   (:use-macros [jiksnu.step-macros :only [step-definitions Given When Then And]]))
 
@@ -17,7 +18,7 @@
 
    (println "loading core spec")
 
-   (this-as this (.setDefaultTimeout this (page-helpers/seconds 30)))
+   (this-as this (.setDefaultTimeout this (helpers.page/seconds 30)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -33,7 +34,7 @@
        (helpers.action/login-user)
        (helpers.action/log-out!)))
 
-   (Given #"^I am at the \"([^\"]*)\" page$" [page-name next]
+   (Given #"^I am at the \"([^\"]*)\" page$" [page-name]
 
      (timbre/infof "Page: %s" page-name)
 
@@ -41,7 +42,7 @@
 
      (let [page-object (aget pom/pages page-name)]
        (timbre/infof "Page object: %s" page-object)
-       (.. (page-object.) get (then next))))
+       (sp/load-page (page-object.))))
 
    (Given #"^I am logged in as a normal user$" [next]
      (.. js/browser manage deleteAllCookies)
@@ -127,7 +128,7 @@
          (sleep 500)
          (then (fn []
                  (timbre/info "Fetching Status")
-                 (.. (expect (page-helpers/get-username))
+                 (.. (expect (helpers.page/get-username))
                      -to -eventually (equal "test")
                      -and (notify next))))))
 
