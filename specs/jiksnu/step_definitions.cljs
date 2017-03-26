@@ -17,7 +17,7 @@
 
    (println "loading core spec")
 
-   ;; (this-as this (.setDefaultTimeout this (page-helpers/seconds 60)))
+   (this-as this (.setDefaultTimeout this (page-helpers/seconds 5)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -179,9 +179,6 @@
      (.pending next))
 
    (Then #"^the alias field matches that user's uri$" [next]
-     (.pending next))
-
-   (Then #"^the content\-type is \"([^\"]*)\"$" [content-type next]
      (.pending next))
 
    ;; (sic)
