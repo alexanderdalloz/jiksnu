@@ -3,14 +3,14 @@
 var config2 = {
   // set to "custom" instead of cucumber.
   framework: 'custom',
-
+  seleniumAddress: 'http://selenium:24444/wd/hub',
   // path relative to the current config file
   frameworkPath: require.resolve('protractor-cucumber-framework'),
 
   specs: ['features/*.feature'],
-  baseUrl: 'http://web/',
+  baseUrl: 'http://jiksnu-dev:8080/',
   capabilities: {
-    browserName: 'phantomjs',
+    browserName: 'chrome',
     'phantomjs.binary.path': require('phantomjs-prebuilt').path
   },
   cucumberOpts: {

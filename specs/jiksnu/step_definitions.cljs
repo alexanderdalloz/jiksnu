@@ -44,7 +44,7 @@
        (sp/load-page (page-object.))))
 
    (Given #"^I am logged in as a normal user$" [next]
-     (.. js/browser manage deleteAllCookies)
+     (js/browser.manage.deleteAllCookies)
      (.. (helpers.action/login-user) (then next)))
 
    (Given #"^I am logged in as an admin$" [next]
@@ -55,7 +55,7 @@
 
      (.click (element (by-css "#placeholderInput")))
 
-     (element (.css js/by ""))
+     (element (js/by.css ""))
 
      (.sendKeys (by-model "activity.content") "drvfdgdfgdfsgdf")
 
@@ -86,12 +86,12 @@
      (.pending next))
 
    (When #"^I log out$" [next]
-     (.. js/browser
-         (wait (fn []
-                 (.. element
-                     (all (by-css ".ui-notification"))
-                     (count)
-                     (then (fn [c] (zero? c)))))))
+     (js/browser.wait
+      (fn []
+        (.. element
+            (all (by-css ".ui-notification"))
+            (count)
+            (then (fn [c] (zero? c))))))
      (let [locator (element (by-css ".logout-button"))]
        (.. locator click (then (fn [] (next))))))
 
@@ -128,12 +128,11 @@
      #_(.. (expect (get-current-page)) -to -eventually (equal page-name)))
 
    (Then #"^I should be logged in$" []
-     (.. js/browser
-         (sleep 500)
-         (then (fn []
-                 (timbre/info "Fetching Status")
-                 (.. (expect (helpers.page/get-username))
-                     -to -eventually (equal "test"))))))
+     (-> (js/browser.sleep 500)
+         (.then (fn []
+                  (timbre/info "Fetching Status")
+                  (.. (expect (helpers.page/get-username))
+                      -to -eventually (equal "test"))))))
 
    (Then #"^I should not be logged in$" [next]
      (.pending next))
@@ -169,7 +168,7 @@
 
    (Then #"^I should wait$" [next]
      ;; http://www.lifeway.com/n/Product-Family/True-Love-Waits
-     (.pause js/browser)
+     (js/browser.pause)
      (next))
 
    (Then #"^it should have a \"([^\"]*)\" field$" [field-name next]
