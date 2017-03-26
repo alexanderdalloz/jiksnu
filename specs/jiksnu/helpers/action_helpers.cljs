@@ -33,4 +33,4 @@
   "Delete all browser cookies"
   []
   (timbre/info "Deleting all cookies")
-  (js/browser.manage.deleteAllCookies))
+  #_(js/browser.manage.deleteAllCookies))
