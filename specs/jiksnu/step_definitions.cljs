@@ -76,7 +76,9 @@
 
    (When #"^I click the \"([^\"]*)\" link$" [link-name]
      (let [locator (element (by-css (str "." link-name "Link")))]
-       (.click locator)))
+       (timbre/debugf "Locator: %s" (pr-str locator))
+       (-> (.click locator)
+           (.then (fn [a] (timbre/debugf "Clicked: %s" a))))))
 
    (When #"^I click the \"([^\"]*)\" button for that user$" [button-name next]
      (.pending next))
@@ -121,18 +123,17 @@
 
    (Then #"^I should be at the \"([^\"]*)\" page$" [page-name]
      (timbre/debugf "Asserting to be at page - %s" page-name)
-     (timbre/debugf "Current page: %s" (.getCurrentUrl js/browser))
-     nil
+     (-> (.getCurrentUrl js/browser)
+         (.then (fn [url] (timbre/debugf "Current page: %s" url))))
      #_(.. (expect (get-current-page)) -to -eventually (equal page-name)))
 
-   (Then #"^I should be logged in$" [next]
+   (Then #"^I should be logged in$" []
      (.. js/browser
          (sleep 500)
          (then (fn []
                  (timbre/info "Fetching Status")
                  (.. (expect (helpers.page/get-username))
-                     -to -eventually (equal "test")
-                     -and (notify next))))))
+                     -to -eventually (equal "test"))))))
 
    (Then #"^I should not be logged in$" [next]
      (.pending next))

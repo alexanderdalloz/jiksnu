@@ -20,7 +20,11 @@
     (submit this))
 
   (set-password [this password]
-    (.sendKeys (by-model "password") password))
+    (let [locator (by-model "password")]
+      (-> (.getWebElement locator)
+          (.then (fn [l]
+                   (timbre/debugf "Sending password (%s) to %s" password (pr-str l))
+                   (.sendKeys locator password))))))
 
   (set-username [this username]
     (timbre/debug "setting username, login")
