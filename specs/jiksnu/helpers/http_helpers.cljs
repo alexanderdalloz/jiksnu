@@ -6,9 +6,9 @@
 
 (def child-process (nodejs/require "child_process"))
 (def JSData (nodejs/require "js-data"))
-(def HttpAdapter (.-HttpAdapter (nodejs/require "js-data-http-node")))
+;; (def HttpAdapter (.-HttpAdapter (nodejs/require "js-data-http-node")))
 (timbre/infof "Base Path: %s" base-path)
-(def http-adapter (HttpAdapter. #js {:basePath base-path}))
+;; (def http-adapter (HttpAdapter. #js {:basePath base-path}))
 
 (defn get-cookie-map
   "Returns the cookie data from a response map"
@@ -28,6 +28,7 @@
                    :password "test"}]
      #_(.fulfill d true)
      ;; js/debugger
+     #_
      (.. http-adapter
          (GET "/main/login")
          (then (fn [data]
@@ -57,6 +58,7 @@
                 (let [activity #js {:content text}
                       url (str base-path "/model/activities")
                       data #js {:auth #js {:username "test" :password "test"}}]
+                  #_
                   (.POST http-adapter url activity data))))
         (then (fn [response]
                 (let [status-code response.status]
@@ -71,6 +73,7 @@
   [username]
   (let [d (.defer (.-promise js/protractor))
         url (str "/api/user/" username)]
+    #_
     (.. http-adapter
         (GET url)
         (then (fn [response]
