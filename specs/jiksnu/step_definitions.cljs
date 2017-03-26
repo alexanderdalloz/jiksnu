@@ -11,18 +11,18 @@
 
 (println "loading core spec - before")
 
-(def steps
+(defn steps
+  []
   (step-definitions
 
    (println "loading core spec")
 
-   (this-as this (.setDefaultTimeout this (page-helpers/seconds 60)))
+   ;; (this-as this (.setDefaultTimeout this (page-helpers/seconds 60)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-   (Given #"^a user exists with the password \"([^\"]*)\"$" [password next]
-     (helpers.action/register-user)
-     (next))
+   (Given #"^a user exists with the password \"([^\"]*)\"$" [password]
+     (helpers.action/register-user))
 
    (Given #"^another user exists$" [next]
      (helpers.action/register-user "test2")
@@ -187,3 +187,5 @@
    ;; (sic)
    (Then #"^the response is sucsessful$" [next]
      (.pending next))))
+
+(set! js/module.exports (steps))

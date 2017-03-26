@@ -19,7 +19,8 @@ var config2 = {
       // 'spec.js',
       // 'main.js',
       // 'target/resources/public/c'
-      'target/protractor-tests.js'
+      'target/protractor-tests.js',
+      'target/specs/jiksnu/step_definitions.js'
     ]
   }
 
