@@ -37,12 +37,12 @@
 
   Page
 
-  (sp/get [this]
+  (load-page [this]
     (timbre/debugf "loading login page")
     (.get js/browser "/main/login")))
 
 (set! (.. LoginPage -prototype -get)
-      (fn [] (this-as this (get this))))
+      (fn [] (this-as this (sp/load-page this))))
 
 (set! (.. LoginPage -prototype -waitForLoaded)
       (fn []
