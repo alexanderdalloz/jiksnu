@@ -9,7 +9,7 @@
 (def -main (fn [] nil))
 (set! *main-cli-fn* -main) ;; this is required
 
-(def base-domain "jiksnu-dev")
+(def base-domain "localhost")
 (def base-port 8080)
 (def base-path (str "http://" base-domain (when (not= base-port 80) (str ":" base-port))))
 
