@@ -1,5 +1,6 @@
 (ns jiksnu.pages.LoginPage
-  (:require [jiksnu.helpers.page-helpers :refer [by-css by-model]]
+  (:require [jiksnu.helpers.page-helpers :as helpers.page
+             :refer [by-css by-model]]
             [jiksnu.specs.protocols :refer [Page] :as sp]
             [taoensso.timbre :as timbre]))
 
@@ -39,7 +40,7 @@
 
   (load-page [this]
     (timbre/debugf "loading login page")
-    (.get js/browser "/main/login")))
+    (.get js/browser (str helpers.page/base-path "/main/login"))))
 
 (set! (.. LoginPage -prototype -get)
       (fn [] (this-as this (sp/load-page this))))
