@@ -9,7 +9,7 @@
       (fn []
         (timbre/debug "loading register page")
         (-> js/browser
-            (.get "/main/register")
+            (.get "http://localhost:8080/main/register")
             (.then (fn [] (timbre/info "gotten"))
                    (fn [] (timbre/info "not gotten"))))))
 
