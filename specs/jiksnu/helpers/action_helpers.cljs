@@ -9,6 +9,7 @@
    (timbre/info "Registering user")
    (let [page (RegisterPage.)]
      (.get page)
+     (.waitForLoaded page)
      ;; (.setUsername page username)
      ;; (.setPassword page "test")
      (.submit page))))
