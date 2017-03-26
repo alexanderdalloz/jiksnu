@@ -8,10 +8,10 @@
   ([username]
    (timbre/info "Registering user")
    (let [page (RegisterPage.)]
-     #_(.get page)
+     (.get page)
      #_(.setUsername page username)
      #_(.setPassword page "test")
-     #_(.submit page))))
+     (.submit page))))
 
 (defn login-user
   []

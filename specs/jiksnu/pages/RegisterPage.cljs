@@ -1,5 +1,6 @@
 (ns jiksnu.pages.RegisterPage
-  (:require [jiksnu.helpers.page-helpers :refer [by-model]]
+  (:require [clojure.browser.dom :as dom]
+            [jiksnu.helpers.page-helpers :refer [by-model]]
             [taoensso.timbre :as timbre]))
 
 (defn RegisterPage
@@ -8,7 +9,10 @@
 (set! RegisterPage.prototype.get
       (fn []
         (timbre/debug "loading register page")
-        (.get js/browser "/main/register")))
+        (-> js/browser
+            (.get "/main/register")
+            (.then (fn [] (timbre/info "gotten"))
+                   (fn [] (timbre/info "not gotten"))))))
 
 (set! RegisterPage.prototype.setUsername
       (fn [username]
@@ -25,7 +29,7 @@
 (set! RegisterPage.prototype.submit
       (fn []
         (timbre/debug "submitting register form")
-        (.submit (js/$ ".register-form"))))
+        #_(.submit (dom/element ".register-form"))))
 
 (set! RegisterPage.prototype.waitForLoaded
       (fn []
