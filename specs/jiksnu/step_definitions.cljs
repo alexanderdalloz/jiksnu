@@ -17,7 +17,7 @@
 
    (println "loading core spec")
 
-   (this-as this (.setDefaultTimeout this (page-helpers/seconds 5)))
+   (this-as this (.setDefaultTimeout this (page-helpers/seconds 30)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
