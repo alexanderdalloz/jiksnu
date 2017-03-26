@@ -6,6 +6,11 @@
 
 (def child-process (nodejs/require "child_process"))
 (def JSData (nodejs/require "js-data"))
+(def DSHttpAdapter (nodejs/require "js-data-http"))
+(def adapter (DSHttpAdapter.))
+(def store (JSData.DS))
+
+(.registerAdapter store "http" adapter #js {:default true})
 ;; (def HttpAdapter (.-HttpAdapter (nodejs/require "js-data-http-node")))
 (timbre/infof "Base Path: %s" base-path)
 ;; (def http-adapter (HttpAdapter. #js {:basePath base-path}))
@@ -13,7 +18,7 @@
 (defn get-cookie-map
   "Returns the cookie data from a response map"
   [response]
-  (if-let [set-cookie-string (first (aget (.-headers response) "set-cookie"))]
+  (if-let [set-cookie-string (first (aget response.headers "set-cookie"))]
     (->> (string/split set-cookie-string #";")
          (map (fn [s] (let [[k v] (string/split s #"=")] [k v])))
          (into {}))
@@ -23,7 +28,7 @@
   "Authenticate the test user. Get a cookie."
   ([] (authenticate nil))
   ([cookie]
-   (let [d (.defer (.-promise js/protractor))
+   (let [d (.defer js/protractor.promise)
          data #js {:username "test"
                    :password "test"}]
      #_(.fulfill d true)
@@ -40,7 +45,7 @@
 
 (defn get-fortune
   []
-  (let [d (.defer (.-promise js/protractor))]
+  (let [d (js/protractor.promise.defer)]
     (.exec child-process "/usr/games/fortune" #js {}
            (fn [err stdout stderr]
              (if err
@@ -52,26 +57,26 @@
   "Create a mock activity"
   []
   (let [d (.defer js/protractor.promise)]
-    (.. (get-fortune)
-        (then (fn [text]
+    (-> (get-fortune)
+        (.then (fn [text]
                 (timbre/infof "Text: %s" text)
-                (let [activity #js {:content text}
-                      url (str base-path "/model/activities")
-                      data #js {:auth #js {:username "test" :password "test"}}]
-                  #_
-                  (.POST http-adapter url activity data))))
-        (then (fn [response]
-                (let [status-code response.status]
-                  (timbre/debugf "Status Code: %s" status-code)
-                  (if (#{200 201} status-code)
-                    (.fulfill d response)
-                    (.reject d response))))))
+                 (let [activity #js {:content text}
+                       url (str base-path "/model/activities")
+                       data #js {:auth #js {:username "test" :password "test"}}]
+                   #_
+                   (.POST http-adapter url activity data))))
+        (.then (fn [response]
+                 (let [status-code (.-status response)]
+                   (timbre/debugf "Status Code: %s" status-code)
+                   (if (#{200 201} status-code)
+                     (d.fulfill response)
+                     (d.reject response))))))
     d.promise))
 
 (defn user-exists?
   "Queries the server to see if a user exists with that name"
   [username]
-  (let [d (.defer (.-promise js/protractor))
+  (let [d (js/protractor.promise.defer)
         url (str "/api/user/" username)]
     #_
     (.. http-adapter

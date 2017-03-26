@@ -23,7 +23,6 @@ var config2 = {
       'target/specs/jiksnu/step_definitions.js'
     ]
   }
-
 };
 
 exports.config = config2;

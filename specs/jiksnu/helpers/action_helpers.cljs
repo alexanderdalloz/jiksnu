@@ -1,17 +1,21 @@
 (ns jiksnu.helpers.action-helpers
-  (:require [jiksnu.pages.LoginPage :refer [LoginPage login]]
+  (:require [jiksnu.helpers.http-helpers :as helpers.http]
+            [jiksnu.pages.LoginPage :refer [LoginPage login]]
             [jiksnu.pages.RegisterPage :refer [RegisterPage]]
             [taoensso.timbre :as timbre]))
 
 (defn register-user
   ([] (register-user "test"))
   ([username]
-   (timbre/info "Registering user")
+   (timbre/infof "Registering user: %s" username)
    (let [page (RegisterPage.)]
      (-> (.get page)
-         ;; (.then (fn [] (.setUsername page username)))
-         ;; (.then (fn [] (.setPassword page "test")))
-         (.then (fn [] (.submit page)))))))
+         (.then (fn [] (.setUsername page username)))
+         (.then (fn [] (.setPassword page "test")))
+         (.then (fn [] (.submit page)))
+         (.then (fn []
+                  (timbre/debugf "Asserting user exists: %s" username)
+                  (helpers.http/user-exists? username)))))))
 
 (defn login-user
   []
