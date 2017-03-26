@@ -8,11 +8,10 @@
   ([username]
    (timbre/info "Registering user")
    (let [page (RegisterPage.)]
-     (.get page)
-     (.waitForLoaded page)
-     ;; (.setUsername page username)
-     ;; (.setPassword page "test")
-     (.submit page))))
+     (-> (.get page)
+         ;; (.then (fn [] (.setUsername page username)))
+         ;; (.then (fn [] (.setPassword page "test")))
+         (.then (fn [] (.submit page)))))))
 
 (defn login-user
   []
