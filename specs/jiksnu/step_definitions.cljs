@@ -16,8 +16,6 @@
   []
   (step-definitions
 
-   (println "loading core spec")
-
    (this-as this (.setDefaultTimeout this (helpers.page/seconds 30)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -35,12 +33,7 @@
        (helpers.action/log-out!)))
 
    (Given #"^I am at the \"([^\"]*)\" page$" [page-name]
-
-     ;; (timbre/infof "Page: %s" page-name)
-     ;; (timbre/infof "Url: %s" (current-page))
-
      (let [page-object (aget pom/pages page-name)]
-       ;; (timbre/infof "Page object: %s" page-object)
        (sp/load-page (page-object.))))
 
    (Given #"^I am logged in as a normal user$" [next]
@@ -52,13 +45,9 @@
      (next))
 
    (Given #"^that user posts an activity$" [next]
-
      (.click (element (by-css "#placeholderInput")))
-
      (element (js/by.css ""))
-
      (.sendKeys (by-model "activity.content") "drvfdgdfgdfsgdf")
-
      (next))
 
    (Given #"^there is a public activity" [next]
@@ -137,43 +126,37 @@
    (Then #"^I should not be logged in$" [next]
      (.pending next))
 
-   (Then #"^I should not see a \"([^\"]*)\" button for that user$" [button-name next]
+   (Then #"^I should not see a \"([^\"]*)\" button for that user$" [button-name]
      (let [class-name (str "." button-name "-button")]
        (timbre/infof "Class Name: %s" class-name)
        (.. (expect (-> (by-css class-name) element .isPresent))
-           -to -eventually -be -false))
-     (next))
+           -to -eventually -be -false)))
 
-   (Then #"^I should see (\d+) users$" [n next]
+   (Then #"^I should see (\d+) users$" [n]
      (.. (expect (.count (.all element (by-css "show-user-minimal"))))
-         -to -eventually (equal (int n))
-         -and (notify next)))
+         -to -eventually (equal (int n))))
 
-   (Then #"^I should see a form$" [next]
-     (.. (expect (js/$ "form")) -to -exist)
-     (next))
+   (Then #"^I should see a form$" []
+     (.. (expect (js/$ "form")) -to -exist))
 
    (Then #"^I should see a list of users$" [next]
      (.pending next))
 
-   (Then #"^I should see an activity$" [next]
+   (Then #"^I should see an activity$" []
      (let [article-element (element (by-css "article"))]
        (timbre/infof "checking activity - %s" article-element)
        (.. (expect (.isPresent article-element))
-           -to -eventually (equal true)))
-     (next))
+           -to -eventually (equal true))))
 
    (Then #"^I should see that activity$" [next]
      (.pending next))
 
-   (Then #"^I should wait$" [next]
+   (Then #"^I should wait$" []
      ;; http://www.lifeway.com/n/Product-Family/True-Love-Waits
-     (js/browser.pause)
-     (next))
+     (js/browser.pause))
 
    (Then #"^it should have a \"([^\"]*)\" field$" [field-name next]
-     (.. (expect (js/$ (str "*[name=" field-name "]"))) -to -exist)
-     (next))
+     (.. (expect (js/$ (str "*[name=" field-name "]"))) -to -exist))
 
    (Then #"^that user's name should be \"([^\"]*)\"$" [user-name next]
      (.pending next))
