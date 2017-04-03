@@ -90,18 +90,16 @@
      (let [locator (element (by-css ".logout-button"))]
        (.. locator click (then (fn [] (next))))))
 
-   (When #"^I put my password in the \"([^\"]*)\" field$" [field-name next]
+   (When #"^I put my password in the \"([^\"]*)\" field$" [field-name]
      (let [page (LoginPage.)]
        (.waitForLoaded page)
-       (-> (lp/set-password page "test")
-           (.then (fn [] (next))))))
+       (lp/set-password page "test")))
 
-   (When #"^I put my username in the \"([^\"]*)\" field$" [username next]
+   (When #"^I put my username in the \"([^\"]*)\" field$" [username]
      (timbre/info "putting username")
      (let [page (LoginPage.)]
        (.waitForLoaded page)
-       (-> (lp/set-username page "test")
-           (.then (fn [] (next))))))
+       (lp/set-username page "test")))
 
    (When #"^I request the user\-meta page for that user with a client$" [next]
      (.pending next))
