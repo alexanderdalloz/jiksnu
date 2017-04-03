@@ -20,12 +20,12 @@ var requires = {
 };
 
 // These are replaced via envify.
-window.sentryDSNClient = process.env.JIKSNU_SENTRY_DSN_CLIENT;
-window.themeColor = process.env.JIKSNU_THEME_COLOR;
+sentryDSNClient = process.env.JIKSNU_SENTRY_DSN_CLIENT;
+themeColor = process.env.JIKSNU_THEME_COLOR;
 
 if (typeof window.sentryDSNClient != undefined) {
   requires.raven = window.Raven = require('raven-js');
-  window.Raven.Plugins = {};
+  Raven.Plugins = {};
   requires.ravenAngular = window.Raven.Plugins.Angular = require('raven-js/dist/plugins/angular.js');
 }
 
