@@ -1,19 +1,28 @@
-var config = require('cukefarm').config;
+// var config = require('cukefarm').config;
 
-config.specs = 'features/*.feature';
-config.baseUrl = 'http://jiksnu-integration.docker/';
-// config.capabilities.browserName = 'chrome';
-config.capabilities.browserName = 'phantomjs';
-config.capabilities['phantomjs.binary.path'] = require('phantomjs-prebuilt').path;
-config.cucumberOpts.format = "pretty";
-// config.cucumberOpts.format = "summary";
-config.cucumberOpts.require.push('target/protractor-tests.js');
+var config2 = {
+  // set to "custom" instead of cucumber.
+  framework: 'custom',
 
-// config.seleniumAddress = 'http://webdriver:24444/wd/hub';
+  // path relative to the current config file
+  frameworkPath: require.resolve('protractor-cucumber-framework'),
 
-config.plugins = [];
-// config.plugins.push(
-//   {package: 'protractor-console',
-//    logLevels: ['debug', 'info', 'warning', 'severe', 'log']});
+  specs: ['features/*.feature'],
+  baseUrl: 'http://web/',
+  capabilities: {
+    browserName: 'phantomjs',
+    'phantomjs.binary.path': require('phantomjs-prebuilt').path
+  },
+  cucumberOpts: {
+    format: 'pretty',
+    require: [
+      'spec.js',
+      // 'main.js',
+      // 'target/resources/public/c'
+      'target/protractor-tests.js'
+    ]
+  }
 
-exports.config = config;
+};
+
+exports.config = config2;

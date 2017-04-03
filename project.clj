@@ -113,8 +113,9 @@
                                  :notify-command ["notify-send"]
                                  :compiler {
                                             :output-to "target/protractor-tests.js"
-                                            ;; :output-dir "target/specs/"
-                                            :optimizations :simple
+                                            :output-dir "target/specs/"
+                                            :optimizations :none
+                                            :main "jiksnu.specs.main"
                                             :target :nodejs
                                             :language-in :ecmascript5
                                             :pretty-print true}}}}}
