@@ -81,7 +81,7 @@
                   (fn []
                     (let [p (.follow app)]
                       (.$digest $rootScope)
-                      (.. (js/expect p) (toBeRejected)))))))))
+                      (-> (js/expect p) .toBeRejected))))))))
 
         (js/describe ".invokeAction"
           (fn []
