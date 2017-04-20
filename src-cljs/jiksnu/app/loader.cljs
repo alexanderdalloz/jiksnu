@@ -1,5 +1,6 @@
 (ns jiksnu.app.loader
-  (:require [jiksnu.registry :as registry]))
+  (:require [jiksnu.registry :as registry]
+            [taoensso.timbre :as timbre]))
 
 (defn configure-raven-plugin
   [plugins]
@@ -19,4 +20,5 @@
 (defn initialize-module!
   []
   (let [plugins (clj->js (initialize-plugins!))]
+    (js/console.log "plugins" plugins)
     (js/angular.module "jiksnu" plugins)))
