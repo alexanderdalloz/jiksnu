@@ -28,7 +28,8 @@
 
 (def json-appender (-> (spit-appender {:fname "logs/timbre-spit.log"})
                        (assoc :output-fn json-formatter)))
-(def stdout-appender (println-appender {:stream :auto}))
+(def stdout-appender (-> (println-appender {:stream :auto})
+                         (assoc :output-fn json-formatter)))
 
 (defn set-logger
   []
