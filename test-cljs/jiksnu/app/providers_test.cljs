@@ -82,7 +82,7 @@
               (fn []
                 (js/it "should be rejected"
                   (fn []
-                    (let [p (.follow app)]
+                    (let [p (.follow app nil)]
                       (.$digest $rootScope)
                       (-> (js/expect p) .toBeRejected))))))))
 

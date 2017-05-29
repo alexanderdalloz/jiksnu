@@ -9,7 +9,7 @@
 (def app-methods
   {:connect       methods/connect
    :fetchStatus   methods/fetch-status
-   :follow        methods/follow
+   :follow        p/follow
    :getUserId     p/get-user-id
    :go            methods/go
    :handleMessage methods/handle-message

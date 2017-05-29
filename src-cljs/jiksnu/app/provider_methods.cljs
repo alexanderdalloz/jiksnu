@@ -58,7 +58,7 @@
 (defn follow
   "Follow the target user"
   [$q $http target]
-  (timbre/debug "follow" target)
+  (timbre/debugf "follow - %s" target)
   (if target
     (let [object  #js {:id target._id}
           activity #js {:verb "follow" :object object}]
