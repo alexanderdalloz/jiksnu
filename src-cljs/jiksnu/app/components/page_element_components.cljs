@@ -2,7 +2,6 @@
   (:require [jiksnu.app :refer [jiksnu]]
             [jiksnu.app.helpers :as helpers]
             [jiksnu.app.protocols :as p]
-            jiksnu.app.services
             [jiksnu.registry :as registry]
             [taoensso.timbre :as timbre]))
 
