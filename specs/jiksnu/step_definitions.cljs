@@ -14,158 +14,162 @@
 
 (defn steps
   []
-  (step-definitions
+  (println "inside step definition macro")
 
-   (this-as this (.setDefaultTimeout this (helpers.page/seconds 30)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-   (Given #"^a user exists with the password \"([^\"]*)\"$" [password]
-     (helpers.action/register-user))
-
-   (Given #"^another user exists$" [next]
-     (helpers.action/register-user "test2")
-     (next))
-
-   (Given #"^I am (not )?logged in$" [not-str]
-     (if (empty? not-str)
-       (helpers.action/login-user)
-       (helpers.action/log-out!)))
-
-   (Given #"^I am at the \"([^\"]*)\" page$" [page-name]
-     (let [page-object (aget pom/pages page-name)]
-       (sp/load-page (page-object.))))
-
-   (Given #"^I am logged in as a normal user$" [next]
-     (js/browser.manage.deleteAllCookies)
-     (.. (helpers.action/login-user) (then next)))
-
-   (Given #"^I am logged in as an admin$" [next]
-     (.click (js/$ ".logout-button"))
-     (next))
-
-   (Given #"^that user posts an activity$" [next]
-     (.click (element (by-css "#placeholderInput")))
-     (element (js/by.css ""))
-     (.sendKeys (by-model "activity.content") "drvfdgdfgdfsgdf")
-     (next))
-
-   (Given #"^there is a public activity" [next]
-     (-> (helpers.http/an-activity-exists)
-         (.then (fn [] (next)))))
-
-   (Given #"^there is a user$" []
-     (-> (helpers.http/user-exists? "test")
-         (.then (fn [a]
-                  (timbre/infof "user exists: %s" a)
-                  (when-not a (helpers.action/register-user))))))
+  ;; (this-as this (.setDefaultTimeout this (helpers.page/seconds 30)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-   (When #"^I click the \"([^\"]*)\" link$" [link-name]
-     (let [locator (element (by-css (str "." link-name "Link")))]
-       (timbre/debugf "Locator: %s" (pr-str locator))
-       (-> (.click locator)
-           (.then (fn [a] (timbre/debugf "Clicked: %s" a))))))
+  (Given #"^a user exists with the password \"([^\"]*)\"$" [password]
+    (helpers.action/register-user))
 
-   (When #"^I click the \"([^\"]*)\" button for that user$" [button-name next]
-     (.pending next))
+  ;; (Given #"^another user exists$" [next]
+  ;;   (helpers.action/register-user "test2")
+  ;;   (next))
 
-   (When #"^I go to the \"([^\"]*)\" page for that user$" [page-name next]
-     (.pending next))
+  (Given #"^I am (not )?logged in$" [not-str]
+    (if (empty? not-str)
+      (helpers.action/login-user)
+      (helpers.action/log-out!)))
 
-   (When #"^I log out$" [next]
-     (js/browser.wait
-      (fn []
-        (.. element
-            (all (by-css ".ui-notification"))
-            (count)
-            (then (fn [c] (zero? c))))))
-     (let [locator (element (by-css ".logout-button"))]
-       (.. locator click (then (fn [] (next))))))
+  ;; (Given #"^I am at the \"([^\"]*)\" page$" [page-name]
+  ;;   (let [page-object (aget pom/pages page-name)]
+  ;;     (sp/load-page (page-object.))))
 
-   (When #"^I put my password in the \"([^\"]*)\" field$" [field-name]
-     (let [page (LoginPage.)]
-       (.waitForLoaded page)
-       (lp/set-password page "test")))
+  ;; (Given #"^I am logged in as a normal user$" [next]
+  ;;   (js/browser.manage.deleteAllCookies)
+  ;;   (.. (helpers.action/login-user) (then next)))
 
-   (When #"^I put my username in the \"([^\"]*)\" field$" [username]
-     (timbre/info "putting username")
-     (let [page (LoginPage.)]
-       (.waitForLoaded page)
-       (lp/set-username page "test")))
+  ;; (Given #"^I am logged in as an admin$" [next]
+  ;;   (.click (js/$ ".logout-button"))
+  ;;   (next))
 
-   (When #"^I request the user\-meta page for that user with a client$" [next]
-     (.pending next))
+  ;; (Given #"^that user posts an activity$" [next]
+  ;;   (.click (element (by-css "#placeholderInput")))
+  ;;   (element (js/by.css ""))
+  ;;   (.sendKeys (by-model "activity.content") "drvfdgdfgdfsgdf")
+  ;;   (next))
 
-   (When #"^I submit that form$" [next]
-     (.pending next))
+  ;; (Given #"^there is a public activity" [next]
+  ;;   (-> (helpers.http/an-activity-exists)
+  ;;       (.then (fn [] (next)))))
 
-   (When #"^that user should be deleted$" [next]
-     (.pending next))
+  ;; (Given #"^there is a user$" []
+  ;;   (-> (helpers.http/user-exists? "test")
+  ;;       (.then (fn [a]
+  ;;                (timbre/infof "user exists: %s" a)
+  ;;                (when-not a (helpers.action/register-user))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-   (Then #"^I should be an admin$" [next]
-     (.pending next))
+  (When #"^I click the \"([^\"]*)\" link$" [link-name]
+    (let [locator (element (by-css (str "." link-name "Link")))]
+      (timbre/debugf "Locator: %s" (pr-str locator))
+      (-> (.click locator)
+          (.then (fn [a] (timbre/debugf "Clicked: %s" a))))))
 
-   (Then #"^I should be at the \"([^\"]*)\" page$" [page-name]
-     (timbre/debugf "Asserting to be at page - %s" page-name)
-     (js/browser.waitForAngular)
-     (-> (js/browser.getCurrentUrl)
-         (.then (fn [url] (timbre/debugf "Current page: %s" url))))
-     #_(.. (expect (get-current-page)) -to -eventually (equal page-name)))
+  ;; (When #"^I click the \"([^\"]*)\" button for that user$" [button-name next]
+  ;;   (.pending next))
 
-   (Then #"^I should be logged in$" []
-     (-> (js/browser.sleep 500)
-         (.then (fn []
-                  (timbre/info "Fetching Status")
-                  (.. (expect (helpers.page/get-username))
-                      -to -eventually (equal "test"))))))
+  ;; (When #"^I go to the \"([^\"]*)\" page for that user$" [page-name next]
+  ;;   (.pending next))
 
-   (Then #"^I should not be logged in$" [next]
-     (.pending next))
+  ;; (When #"^I log out$" [next]
+  ;;   (js/browser.wait
+  ;;    (fn []
+  ;;      (.. element
+  ;;          (all (by-css ".ui-notification"))
+  ;;          (count)
+  ;;          (then (fn [c] (zero? c))))))
+  ;;   (let [locator (element (by-css ".logout-button"))]
+  ;;     (.. locator click (then (fn [] (next))))))
 
-   (Then #"^I should not see a \"([^\"]*)\" button for that user$" [button-name]
-     (let [class-name (str "." button-name "-button")]
-       (timbre/infof "Class Name: %s" class-name)
-       (.. (expect (-> (by-css class-name) element .isPresent))
-           -to -eventually -be -false)))
+  (When #"^I put my password in the \"([^\"]*)\" field$" [field-name]
+    (let [page (LoginPage.)]
+      (.waitForLoaded page)
+      (lp/set-password page "test")))
 
-   (Then #"^I should see (\d+) users$" [n]
-     (.. (expect (.count (.all element (by-css "show-user-minimal"))))
-         -to -eventually (equal (int n))))
+  (When #"^I put my username in the \"([^\"]*)\" field$" [username]
+    (timbre/info "putting username")
+    (let [page (LoginPage.)]
+      (.waitForLoaded page)
+      (lp/set-username page "test")))
 
-   (Then #"^I should see a form$" []
-     (.. (expect (js/$ "form")) -to -exist))
+  ;; (When #"^I request the user\-meta page for that user with a client$" [next]
+  ;;   (.pending next))
 
-   (Then #"^I should see a list of users$" [next]
-     (.pending next))
+  ;; (When #"^I submit that form$" [next]
+  ;;   (.pending next))
 
-   (Then #"^I should see an activity$" []
-     (let [article-element (element (by-css "article"))]
-       (timbre/infof "checking activity - %s" article-element)
-       (.. (expect (.isPresent article-element))
-           -to -eventually (equal true))))
+  ;; (When #"^that user should be deleted$" [next]
+  ;;   (.pending next))
 
-   (Then #"^I should see that activity$" [next]
-     (.pending next))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-   (Then #"^I should wait$" []
-     ;; http://www.lifeway.com/n/Product-Family/True-Love-Waits
-     (js/browser.pause))
+  ;; (Then #"^I should be an admin$" [next]
+  ;;   (.pending next))
 
-   (Then #"^it should have a \"([^\"]*)\" field$" [field-name next]
-     (.. (expect (js/$ (str "*[name=" field-name "]"))) -to -exist))
+  ;; (Then #"^I should be at the \"([^\"]*)\" page$" [page-name]
+  ;;   (timbre/debugf "Asserting to be at page - %s" page-name)
+  ;;   (js/browser.waitForAngular)
+  ;;   (-> (js/browser.getCurrentUrl)
+  ;;       (.then (fn [url] (timbre/debugf "Current page: %s" url))))
+  ;;   #_(.. (expect (get-current-page)) -to -eventually (equal page-name)))
 
-   (Then #"^that user's name should be \"([^\"]*)\"$" [user-name next]
-     (.pending next))
+  (Then #"^I should be logged in$" []
+    (-> (js/browser.sleep 500)
+        (.then (fn []
+                 (timbre/info "Fetching Status")
+                 (.. (expect (helpers.page/get-username))
+                     -to -eventually (equal "test"))))))
 
-   (Then #"^the alias field matches that user's uri$" [next]
-     (.pending next))
+  ;; (Then #"^I should not be logged in$" [next]
+  ;;   (.pending next))
 
-   ;; (sic)
-   (Then #"^the response is sucsessful$" [next]
-     (.pending next))))
+  ;; (Then #"^I should not see a \"([^\"]*)\" button for that user$" [button-name]
+  ;;   (let [class-name (str "." button-name "-button")]
+  ;;     (timbre/infof "Class Name: %s" class-name)
+  ;;     (.. (expect (-> (by-css class-name) element .isPresent))
+  ;;         -to -eventually -be -false)))
 
-(set! js/module.exports (steps))
+  ;; (Then #"^I should see (\d+) users$" [n]
+  ;;   (.. (expect (.count (.all element (by-css "show-user-minimal"))))
+  ;;       -to -eventually (equal (int n))))
+
+  ;; (Then #"^I should see a form$" []
+  ;;   (.. (expect (js/$ "form")) -to -exist))
+
+  ;; (Then #"^I should see a list of users$" [next]
+  ;;   (.pending next))
+
+  ;; (Then #"^I should see an activity$" []
+  ;;   (let [article-element (element (by-css "article"))]
+  ;;     (timbre/infof "checking activity - %s" article-element)
+  ;;     (.. (expect (.isPresent article-element))
+  ;;         -to -eventually (equal true))))
+
+  ;; (Then #"^I should see that activity$" [next]
+  ;;   (.pending next))
+
+  ;; (Then #"^I should wait$" []
+  ;;   ;; http://www.lifeway.com/n/Product-Family/True-Love-Waits
+  ;;   (js/browser.pause))
+
+  ;; (Then #"^it should have a \"([^\"]*)\" field$" [field-name next]
+  ;;   (.. (expect (js/$ (str "*[name=" field-name "]"))) -to -exist))
+
+  ;; (Then #"^that user's name should be \"([^\"]*)\"$" [user-name next]
+  ;;   (.pending next))
+
+  ;; (Then #"^the alias field matches that user's uri$" [next]
+  ;;   (.pending next))
+
+  ;; ;; (sic)
+  ;; (Then #"^the response is sucsessful$" [next]
+  ;;   (.pending next))
+
+  )
+
+(steps)
+
+;; (set! js/module.exports (steps))
