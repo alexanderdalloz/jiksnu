@@ -2,8 +2,7 @@
 
 (defmacro step-definitions
   [& body]
-  (list 'set! (list '.-exports 'js/module)
-        (apply list 'fn [] body)))
+  `(fn [] ~@body))
 
 (defmacro Given
   [pattern bind & body]
