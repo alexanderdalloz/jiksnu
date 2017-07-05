@@ -16,7 +16,7 @@ var config2 = {
   cucumberOpts: {
     format: 'pretty',
     require: [
-      'spec.js',
+      // 'spec.js',
       // 'main.js',
       // 'target/resources/public/c'
       'target/protractor-tests.js'
