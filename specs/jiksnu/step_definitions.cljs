@@ -15,7 +15,7 @@
 
  (this-as this (.setDefaultTimeout this (page-helpers/seconds 60)))
 
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
  (Given #"^a user exists with the password \"([^\"]*)\"$" [password next]
    (helpers.action/register-user)
@@ -71,7 +71,7 @@
              (fn [a] (helpers.action/register-user)))
        (then next)))
 
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
  (When #"^I click the \"([^\"]*)\" button for that user$" [button-name next]
    (.pending next))
@@ -111,7 +111,7 @@
  (When #"^that user should be deleted$" [next]
    (.pending next))
 
- ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
  (Then #"^I should be an admin$" [next]
    (.pending next))
@@ -183,6 +183,4 @@
 
  ;; (sic)
  (Then #"^the response is sucsessful$" [next]
-   (.pending next))
-
- )
+   (.pending next)))
