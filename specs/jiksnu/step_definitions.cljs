@@ -183,6 +183,4 @@
 
  ;; (sic)
  (Then #"^the response is sucsessful$" [next]
-   (.pending next))
-
- )
+   (.pending next)))
