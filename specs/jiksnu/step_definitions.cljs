@@ -9,9 +9,11 @@
             [taoensso.timbre :as timbre])
   (:use-macros [jiksnu.step-macros :only [step-definitions Given When Then And]]))
 
+(println "loading core spec - before")
+
 (step-definitions
 
- (timbre/info "loading core spec")
+ (println "loading core spec")
 
  (this-as this (.setDefaultTimeout this (page-helpers/seconds 60)))
 
