@@ -117,6 +117,8 @@
                                             :optimizations :none
                                             :main "jiksnu.specs.main"
                                             :target :nodejs
+                                            :verbose true
+                                            :compiler-stats true
                                             :language-in :ecmascript5
                                             :pretty-print true}}}}}
              :production {:cljsbuild {:builds
