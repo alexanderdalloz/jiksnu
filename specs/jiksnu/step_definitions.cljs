@@ -170,6 +170,4 @@
 
   )
 
-(steps)
-
 ;; (set! js/module.exports (steps))

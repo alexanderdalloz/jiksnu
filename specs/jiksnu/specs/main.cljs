@@ -3,5 +3,6 @@
             [jiksnu.step-definitions :as sd]))
 
 (nodejs/enable-util-print!)
-(defn -main [& args])
+(defn -main [& args]
+  (sd/steps))
 (set! *main-cli-fn* -main)

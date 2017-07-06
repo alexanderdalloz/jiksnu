@@ -57,7 +57,8 @@
             [lein-cloverage "1.0.2" :exclusions [org.clojure/clojure]]
             [lein-figwheel "0.5.8"]
             [lein-midje "3.1.3" :exclusions [org.clojure/clojure]]
-            [lein-shell "0.4.0" :exclusions [org.clojure/clojure]]]
+            [lein-shell "0.4.0" :exclusions [org.clojure/clojure]]
+            [org.clojars.punkisdead/lein-cucumber "1.0.7"]]
   :hiera {:ignore-ns #{"jiksnu.channels" "jiksnu.db" "jiksnu.mock" "jiksnu.model"
                        "jiksnu.modules.core.factory" "jiksnu.namespace" "jiksnu.ops"
                        "jiksnu.registry" "jiksnu.session" "jiksnu.util"}}
