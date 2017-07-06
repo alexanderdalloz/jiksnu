@@ -13,18 +13,6 @@
      #_(.setPassword page "test")
      (.submit page))))
 
-(defn login-user
-  []
-  (let [page (LoginPage.)]
-    (timbre/info "Fetching login Page")
-    (.get page)
-
-    (timbre/info "Logging in")
-    (-> (login page "test" "test")
-        (.then
-         (fn []
-           (timbre/info "login finished"))))))
-
 (defn log-out!
   []
   (do

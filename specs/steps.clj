@@ -1,11 +1,12 @@
 (require '[jiksnu.helpers.actions :as helpers.action])
 
 (Given #"^a user exists with the password \"(.*?)\"$" [password]
-  (helpers.action/register-user password))
+       (helpers.action/register-user password))
 
-(Given #"^I am not logged in$" []
-  (comment  Write code here that turns the phrase above into concrete actions  )
-  (throw (cucumber.api.PendingException.)))
+(Given #"^I am (not )?logged in$" [not-str]
+       (if (empty? not-str)
+         (helpers.action/login-user)
+         nil #_(helpers.action/log-out!)))
 
 (Given #"^I am at the \"(.*?)\" page$" [arg1]
   (comment  Write code here that turns the phrase above into concrete actions  )
