@@ -1,4 +1,4 @@
-(ns jiksnu.action-helpers
+(ns jiksnu.helpers.actions
   (:require [clj-http.client :as client]
             #_[clj-webdriver.taxi :refer [to]]
             [taoensso.timbre :as timbre]
@@ -83,3 +83,8 @@
 ;  [page-name]
 ;  (let [path (get page-names page-name)]
 ;    (fetch-page-browser :get path)))
+
+(defn register-user
+  [password]
+  nil
+  )

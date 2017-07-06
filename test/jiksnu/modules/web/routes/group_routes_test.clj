@@ -4,7 +4,7 @@
             [jiksnu.mock :as mock]
             [jiksnu.model.group :as model.group]
             jiksnu.modules.web.routes.group-routes
-            [jiksnu.routes-helper :refer [as-user response-for]]
+            [jiksnu.routes :refer [as-user response-for]]
             [jiksnu.test-helper :as th]
             [midje.sweet :refer :all]
             [ring.mock.request :as req])
