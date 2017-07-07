@@ -109,6 +109,8 @@
                      :exclusions [http-kit org.clojure/core.cache]]
                     [org.clojure/tools.nrepl "0.2.13"]
                     [ring-mock "0.1.5"]
+                    [clj-webdriver "0.7.2"]
+                    [org.seleniumhq.selenium/selenium-server "2.47.1"]
                     [slamhound "1.5.5"]]}
              :e2e {:cljsbuild {:builds
                                {:protractor

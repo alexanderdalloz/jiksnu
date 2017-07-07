@@ -5,8 +5,12 @@
             [manifold.time :as time]
             [jiksnu.specs.protocols :as lp]
             [midje.sweet :refer :all]
-            [slingshot.slingshot :refer [throw+ try+]])
-  (:import (jiksnu.specs.pages LoginPage)))
+            [slingshot.slingshot :refer [throw+ try+]]
+            [clj-webdriver.driver :as driver]
+            [clj-webdriver.taxi :as taxi])
+  (:import (org.openqa.selenium.remote DesiredCapabilities CapabilityType RemoteWebDriver)
+           (org.openqa.selenium Platform)
+           (java.net URL)))
 
 (def default-sleep-time (time/seconds 5))
 
@@ -80,22 +84,53 @@
   []
   (timbre/info (get-body)))
 
-;(defn be-at-the-page
-;  [page-name]
-;  (let [path (get page-names page-name)]
-;    (fetch-page-browser :get path)))
+;; (defn be-at-the-page
+;;  [page-name]
+;;  (let [path (get page-names page-name)]
+;;    (fetch-page-browser :get path)))
+
+(def server (atom nil))
+(def driver (atom nil))
+
+(def selenium-config
+  {:host "selenium"
+   :port 24444})
+
+(defn restart-session
+  []
+  (when (not @driver)
+    (let [{:keys [host port]} selenium-config
+          caps (doto (DesiredCapabilities.)
+                 (.setCapability CapabilityType/BROWSER_NAME "firefox")
+                 ;(.setCapability CapabilityType/PLATFORM Platform/MAC)
+                 (.setCapability "name" "clj-webdriver-test-suite"))
+          url (str "http://" host ":" port "/wd/hub")
+          wd (RemoteWebDriver. (URL. url) caps)
+          session-id (str (.getSessionId wd))]
+      (timbre/infof "Session Id: %s" session-id)
+      (reset! driver wd))))
+
 
 (defn register-user
   [password]
   (timbre/info "registering user")
-  (browser/get (expand-url "/"))
-  nil
-  )
+  (restart-session)
+  ;; (let [[a-server a-driver] (taxi/new-remote-session {:port 4444
+  ;;                                                     :host "selenium"}
+  ;;                                                    {:browser :firefox})]
+  ;;   (taxi/set-)
+  ;;   (taxi/set-driver! a-driver))
+
+  (let [d (driver/init-driver @driver)]
+    (timbre/infof "driver: %s" (driver/driver? d))
+    (taxi/set-driver! d)
+    (taxi/to "https://www.google.com/" #_(expand-url "/"))
+    nil))
 
 (defn login-user
   "Log in with test user"
   []
-  (let [page (LoginPage.)]
+  #_(let [page (LoginPage.)]
     (timbre/info "Fetching login Page")
     (lp/load-page page)
 
