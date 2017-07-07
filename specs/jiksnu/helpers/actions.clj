@@ -96,7 +96,7 @@
   []
   (let [page (LoginPage.)]
     (timbre/info "Fetching login Page")
-    (.get page)
+    (lp/load-page page)
 
     (timbre/info "Logging in")
     (-> (lp/login page "test" "test")
