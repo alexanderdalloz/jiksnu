@@ -92,48 +92,47 @@
 (def server (atom nil))
 (def driver (atom nil))
 
-(def selenium-config
-  {:host "selenium"
-   :port 24444})
+(defn get-selenium-config
+  []
+  (let [host "selenium"
+        port 24444
+        url (str "http://" host ":" port "/wd/hub")]
+    {:host host
+     :port port
+     :url url}))
 
 (defn restart-session
   []
   (when (not @driver)
-    (let [{:keys [host port]} selenium-config
+    (let [{:keys [url]} (get-selenium-config)
           caps (doto (DesiredCapabilities.)
                  (.setCapability CapabilityType/BROWSER_NAME "firefox")
                  ;(.setCapability CapabilityType/PLATFORM Platform/MAC)
                  (.setCapability "name" "clj-webdriver-test-suite"))
-          url (str "http://" host ":" port "/wd/hub")
-          wd (RemoteWebDriver. (URL. url) caps)
-          session-id (str (.getSessionId wd))]
-      (timbre/infof "Session Id: %s" session-id)
-      (reset! driver wd))))
-
+          wd (RemoteWebDriver. (URL. url) caps)]
+      (timbre/debug "Getting connection")
+      (let [session-id (str (.getSessionId wd))]
+        (timbre/infof "Session Id: %s" session-id)
+        (reset! driver wd)))))
 
 (defn register-user
   [password]
   (timbre/info "registering user")
   (restart-session)
-  ;; (let [[a-server a-driver] (taxi/new-remote-session {:port 4444
-  ;;                                                     :host "selenium"}
-  ;;                                                    {:browser :firefox})]
-  ;;   (taxi/set-)
-  ;;   (taxi/set-driver! a-driver))
-
   (let [d (driver/init-driver @driver)]
     (timbre/infof "driver: %s" (driver/driver? d))
     (taxi/set-driver! d)
     (taxi/to "https://www.google.com/" #_(expand-url "/"))
-    nil))
+    nil)
+  (.quit @driver))
 
 (defn login-user
   "Log in with test user"
   []
   #_(let [page (LoginPage.)]
-    (timbre/info "Fetching login Page")
-    (lp/load-page page)
+     (timbre/info "Fetching login Page")
+     (lp/load-page page)
 
-    (timbre/info "Logging in")
-    (-> (lp/login page "test" "test")
-        (.then (fn [] (timbre/info "login finished"))))))
+     (timbre/info "Logging in")
+     (-> (lp/login page "test" "test")
+         (.then (fn [] (timbre/info "login finished"))))))
