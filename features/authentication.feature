@@ -16,7 +16,7 @@ Scenario: Logging in
   When I put my username in the "username" field
   And I put my password in the "password" field
   And I click the "login" link
-  Then I should be on the "home" page
+  Then I should be at the "home" page
   And I should be logged in
 
 # Scenario: Logging out
