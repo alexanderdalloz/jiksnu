@@ -1,4 +1,4 @@
-(ns jiksnu.features-helper
+(ns jiksnu.helpers.features
   (:require #_[clj-webdriver.taxi :as taxi]
             [jiksnu.db :as db]
             [jiksnu.mock :refer [my-password]]
