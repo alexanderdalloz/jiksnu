@@ -1,7 +1,7 @@
 (ns jiksnu.modules.admin.routes.like-routes-test
   (:require [clj-factory.core :refer [factory]]
             [jiksnu.model.like :as model.like]
-            [jiksnu.routes-helper :refer [as-admin response-for]]
+            [jiksnu.routes :refer [as-admin response-for]]
             [jiksnu.test-helper :as th]
             [midje.sweet :refer :all]
             [ring.mock.request :as req])

@@ -2,7 +2,7 @@
   (:require [clojure.data.json :as json]
             [jiksnu.modules.core.actions.group-actions :as actions.group]
             [jiksnu.mock :as mock]
-            [jiksnu.routes-helper :refer [as-user response-for]]
+            [jiksnu.routes :refer [as-user response-for]]
             [jiksnu.test-helper :as th]
             [midje.sweet :refer :all]
             [ring.mock.request :as req]
