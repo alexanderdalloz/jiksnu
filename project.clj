@@ -7,6 +7,8 @@
             :url  "http://www.eclipse.org/legal/epl-v10.html"}
   :source-paths ["src" "src-cljs"]
   :resource-paths ["resources" "target/resources" "node_modules"]
+  :test-paths ["test" "test-cljs" "specs"]
+  :cucumber-glue-paths ["specs"]
   :dependencies [[cider/cider-nrepl "0.14.0"]
                  [ciste "0.6.0-20170108.005400-4"
                   :exclusions [ring/ring-core
