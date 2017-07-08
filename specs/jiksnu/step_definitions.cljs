@@ -43,7 +43,7 @@
      (.. (page-object.) get (then next))))
 
  (Given #"^I am logged in as a normal user$" [next]
-   (.. js/browser manage deleteAllCookies)
+   (js/browser.manage.deleteAllCookies)
    (.. (helpers.action/login-user) (then next)))
 
  (Given #"^I am logged in as an admin$" [next]
@@ -54,7 +54,7 @@
 
    (.click (element (by-css "#placeholderInput")))
 
-   (element (.css js/by ""))
+   (element (js/by.css ""))
 
    (.sendKeys (by-model "activity.content") "drvfdgdfgdfsgdf")
 
@@ -83,12 +83,12 @@
    (.pending next))
 
  (When #"^I log out$" [next]
-   (.. js/browser
-       (wait (fn []
-               (.. element
-                   (all (by-css ".ui-notification"))
-                   (count)
-                   (then (fn [c] (zero? c)))))))
+   (js/browser.wait
+    (fn []
+      (.. element
+          (all (by-css ".ui-notification"))
+          (count)
+          (then (fn [c] (zero? c))))))
    (let [locator (element (by-css ".logout-button"))]
      (.. locator click (then (fn [] (next))))))
 
@@ -168,7 +168,7 @@
 
  (Then #"^I should wait$" [next]
    ;; http://www.lifeway.com/n/Product-Family/True-Love-Waits
-   (.pause js/browser)
+   (js/browser.pause)
    (next))
 
  (Then #"^it should have a \"([^\"]*)\" field$" [field-name next]
