@@ -1,7 +1,7 @@
 (ns jiksnu.step-definitions
-  (:require [jiksnu.helpers.action-helpers :as helpers.action]
-            [jiksnu.helpers.http-helpers :as helpers.http]
-            [jiksnu.helpers.page-helpers :as page-helpers
+  (:require [jiksnu.helpers.actions :as helpers.action]
+            [jiksnu.helpers.http :as helpers.http]
+            [jiksnu.helpers.pages :as helpers.page
              :refer [by-css by-model current-page element expect]]
             [jiksnu.pages.LoginPage :as lp :refer [LoginPage login]]
             [jiksnu.pages.RegisterPage :refer [RegisterPage]]

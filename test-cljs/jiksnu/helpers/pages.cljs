@@ -1,4 +1,4 @@
-(ns jiksnu.helpers.page-helpers
+(ns jiksnu.helpers.pages
   (:require [cljs.nodejs :as nodejs]))
 
 (def chai (nodejs/require "chai"))

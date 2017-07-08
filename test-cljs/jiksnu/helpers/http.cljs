@@ -1,7 +1,7 @@
-(ns jiksnu.helpers.http-helpers
+(ns jiksnu.helpers.http
   (:require [cljs.nodejs :as nodejs]
             [clojure.string :as string]
-            [jiksnu.helpers.page-helpers :refer [base-domain base-path]]
+            [jiksnu.helpers.pages :refer [base-domain base-path]]
             [taoensso.timbre :as timbre]))
 
 (def child-process (nodejs/require "child_process"))

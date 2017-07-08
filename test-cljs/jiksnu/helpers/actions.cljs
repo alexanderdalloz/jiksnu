@@ -1,5 +1,6 @@
-(ns jiksnu.helpers.action-helpers
-  (:require [jiksnu.pages.LoginPage :refer [LoginPage login]]
+(ns jiksnu.helpers.actions
+  (:require [jiksnu.helpers.http :as helpers.http]
+            [jiksnu.pages.LoginPage :refer [LoginPage] :as lp]
             [jiksnu.pages.RegisterPage :refer [RegisterPage]]
             [taoensso.timbre :as timbre]))
 
