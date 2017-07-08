@@ -1,6 +1,5 @@
 (ns jiksnu.helpers.actions
   (:require [clj-http.client :as client]
-    #_[clj-webdriver.taxi :refer [to]]
             [taoensso.timbre :as timbre]
             [manifold.stream :as s]
             [manifold.time :as time]
@@ -88,6 +87,8 @@
 
 (defn register-user
   [password]
+  (timbre/info "registering user")
+  (browser/get (expand-url "/"))
   nil
   )
 
@@ -101,4 +102,3 @@
     (timbre/info "Logging in")
     (-> (lp/login page "test" "test")
         (.then (fn [] (timbre/info "login finished"))))))
-

@@ -44,7 +44,7 @@
   Page
 
   (load-page [this]
-    ;(timbre/debugf "loading login page")
+    (timbre/debugf "loading login page")
     ;(.get js/browser (str helpers.page/base-path "/main/login"))
 
     ))
