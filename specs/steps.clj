@@ -1,4 +1,8 @@
 (require '[jiksnu.helpers.actions :as helpers.action])
+(require '[jiksnu.helpers.features :as helpers.features])
+
+(Before [] (helpers.features/before-hook))
+(After [] (helpers.features/after-hook))
 
 (Given #"^a user exists with the password \"(.*?)\"$" [password]
        (helpers.action/register-user password))

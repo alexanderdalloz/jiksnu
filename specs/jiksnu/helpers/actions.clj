@@ -6,11 +6,7 @@
             [jiksnu.specs.protocols :as lp]
             [midje.sweet :refer :all]
             [slingshot.slingshot :refer [throw+ try+]]
-            [clj-webdriver.driver :as driver]
-            [clj-webdriver.taxi :as taxi])
-  (:import (org.openqa.selenium.remote DesiredCapabilities CapabilityType RemoteWebDriver)
-           (org.openqa.selenium Platform)
-           (java.net URL)))
+            [clj-webdriver.taxi :as taxi]))
 
 (def default-sleep-time (time/seconds 5))
 
@@ -85,46 +81,14 @@
   (timbre/info (get-body)))
 
 ;; (defn be-at-the-page
-;;  [page-name]
-;;  (let [path (get page-names page-name)]
-;;    (fetch-page-browser :get path)))
-
-(def server (atom nil))
-(def driver (atom nil))
-
-(defn get-selenium-config
-  []
-  (let [host "selenium"
-        port 24444
-        url (str "http://" host ":" port "/wd/hub")]
-    {:host host
-     :port port
-     :url url}))
-
-(defn restart-session
-  []
-  (when (not @driver)
-    (let [{:keys [url]} (get-selenium-config)
-          caps (doto (DesiredCapabilities.)
-                 (.setCapability CapabilityType/BROWSER_NAME "firefox")
-                 ;(.setCapability CapabilityType/PLATFORM Platform/MAC)
-                 (.setCapability "name" "clj-webdriver-test-suite"))
-          wd (RemoteWebDriver. (URL. url) caps)]
-      (timbre/debug "Getting connection")
-      (let [session-id (str (.getSessionId wd))]
-        (timbre/infof "Session Id: %s" session-id)
-        (reset! driver wd)))))
+;;   [page-name]
+;;   (let [path (get page-names page-name)]
+;;     (fetch-page-browser :get path)))
 
 (defn register-user
   [password]
   (timbre/info "registering user")
-  (restart-session)
-  (let [d (driver/init-driver @driver)]
-    (timbre/infof "driver: %s" (driver/driver? d))
-    (taxi/set-driver! d)
-    (taxi/to "https://www.google.com/" #_(expand-url "/"))
-    nil)
-  (.quit @driver))
+  (taxi/to "https://www.google.com/" #_(expand-url "/")))
 
 (defn login-user
   "Log in with test user"
