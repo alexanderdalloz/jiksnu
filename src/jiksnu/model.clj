@@ -57,3 +57,15 @@
    (get-link item rel nil))
   ([item rel content-type]
    (first (util/rel-filter rel (:links item) content-type))))
+
+(s/fdef get-link
+        :args (s/cat
+               ;; Any record with links
+               ;; TODO: create type for records containing links
+               :item map?
+
+               ;; rel attribute of link in collection
+               :rel string?
+
+               ;; optional content-type attribute
+               :content-type (s/? string?)))
