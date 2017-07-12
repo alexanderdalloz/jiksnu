@@ -1,5 +1,7 @@
 (ns jiksnu.model
   (:require [clojure.spec :as s]
+            [clojure.spec.gen :as gen]
+            [clojure.spec.test :as stest]
             [jiksnu.util :as util]))
 
 ;; TODO: pull these from ns/
@@ -48,6 +50,11 @@
 (defrecord Subscription            [])
 (defrecord User                    [_id])
 
+(s/def ::_id
+  (s/with-gen string?
+    #(gen/fmap (fn [[username domain]] (str "acct:" username "@" domain))
+               (gen/tuple (gen/string-alphanumeric) (gen/string-alphanumeric)))))
+
 (s/def ::user-record (s/keys :req-un [::_id]))
 
 (defrecord UserList                [])
@@ -68,4 +75,8 @@
                :rel string?
 
                ;; optional content-type attribute
-               :content-type (s/? string?)))
+               :content-type (s/? string?))
+        :ret string?
+        )
+
+(stest/instrument 'get-link)

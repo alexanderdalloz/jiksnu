@@ -2,6 +2,8 @@
   (:require [ciste.config :refer [config]]
             [ciste.model :as cm]
             [clojure.data.json :as json]
+            [clojure.spec :as s]
+            [clojure.spec.test :as stest]
             [jiksnu.modules.core.actions.auth-actions :as actions.auth]
             [jiksnu.modules.core.actions.domain-actions :as actions.domain]
             [jiksnu.modules.core.actions.key-actions :as actions.key]
@@ -36,6 +38,14 @@
      (recur ((first hooks) item) (rest hooks))
      item)))
 
+(s/fdef prepare-delete
+        :args (s/cat :user string? :hooks string?)
+        :ret string?
+        :fn string?
+        )
+
+(stest/instrument 'prepare-delete)
+
 (defn prepare-create
   [user]
   (-> user
@@ -53,6 +63,14 @@
       transforms/set-updated-time
       transforms/set-created-time
       transforms/set-no-links))
+
+(s/fdef prepare-create
+        :args (s/* string?)
+        :ret string?
+        :fn string?
+        )
+
+(stest/instrument 'prepare-create)
 
 ;; utils
 
