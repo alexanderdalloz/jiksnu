@@ -14,7 +14,8 @@
             [monger.collection :as mc]
             [slingshot.slingshot :refer [throw+]]
             [validateur.validation :as v])
-  (:import jiksnu.model.User
+  (:import jiksnu.model.Repo
+           jiksnu.model.User
            (org.joda.time DateTime)))
 
 (def collection-name "users")

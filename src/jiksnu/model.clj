@@ -1,5 +1,6 @@
 (ns jiksnu.model
-  (:require [jiksnu.util :as util]))
+  (:require [jiksnu.util :as util]
+            [taoensso.timbre :as timbre]))
 
 ;; TODO: pull these from ns/
 (defonce bound-ns {:hm "http://host-meta.net/xrd/1.0"
@@ -28,6 +29,11 @@
 (defrecord Service                 [])
 (defrecord Stream                  [])
 (defrecord Subscription            [])
+
+(defprotocol Repo
+  (collection-name [this])
+  (index           [this]))
+
 (defrecord User                    [])
 (defrecord UserList                [])
 
